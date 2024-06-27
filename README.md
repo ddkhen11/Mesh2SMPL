@@ -14,3 +14,37 @@ If you use this code, please cite the following paper:
     year={2021},
     primaryClass={cs.CV}
 }
+```
+
+## Instructions to Run the Program
+
+1. Create a conda environment for Python 3.9:
+```cmd
+conda create --name myenv python=3.9
+conda activate myenv
+```
+
+2. Install dependencies using pip:
+```cmd
+pip install -r requirements.txt
+```
+
+3. Download the PyOpenGL wheel specific to Python 3.9 from [Google Drive](https://drive.google.com/drive/folders/1mz7faVsrp0e6IKCQh8MyZh-BcCqEGPwx) (filename: PyOpenGL-3.1.7-cp39-cp39-win_amd64.whl).
+
+4. Install PyOpenGL from the downloaded wheel:
+```cmd
+pip install PyOpenGL-3.1.7-cp39-cp39-win_amd64
+```
+
+5. Clone the repository and navigate into it:
+```cmd
+git clone https://github.com/ddkhen11/Mesh2SMPL
+cd Mesh2SMPL
+```
+
+6. Place your .obj mesh file, .mtl file, and .jpg texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
+
+7. Run the main.py script:
+```cmd
+python main.py
+```
