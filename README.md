@@ -32,6 +32,8 @@ cd Mesh2SMPL
 
 3. Install dependencies using pip:
 ```cmd
+pip install --upgrade setuptools wheel build
+pip install pyembree
 pip install -r requirements.txt
 ```
 
