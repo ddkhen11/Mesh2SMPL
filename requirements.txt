@@ -5,4 +5,3 @@ pyexr
 opencv-python
 tqdm
 scipy
-objio
