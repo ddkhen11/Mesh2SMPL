@@ -42,9 +42,11 @@ git clone https://github.com/ddkhen11/Mesh2SMPL
 cd Mesh2SMPL
 ```
 
-6. Place your .obj mesh file, .mtl file, and .jpg texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
+6. Place a folder containing your .obj mesh file, .mtl file, and .jpg texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
 
 7. Run the main.py script:
 ```cmd
 python main.py
 ```
+
+8. Your results will be in `dataset_example/image_data`.
