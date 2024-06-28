@@ -26,7 +26,7 @@ conda activate myenv
 
 2. Clone the repository and navigate into it:
 ```cmd
-git clone https://github.com/ddkhen11/Mesh2SMPL
+git clone --recurse-submodules https://github.com/ddkhen11/Mesh2SMPL
 cd Mesh2SMPL
 ```
 
