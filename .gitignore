@@ -164,4 +164,6 @@ cython_debug/
 .vscode
 dataset_example/mesh_data/dataset
 dataset_example/image_data
-!dataset_example/image_data/instructions.txt
+tools/smpl_models/*
+!tools/smpl_models/instructions.txt
+tools/output_folder
