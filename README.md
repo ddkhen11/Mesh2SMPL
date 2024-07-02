@@ -7,23 +7,28 @@ Mesh2SMPL is a project that utilizes the [MultiviewSMPLifyX](https://github.com/
 If you use this code, please cite the following papers:
 
 ```bibtex
-@ARTICLE{zheng2020pamir,
+@ARTICLE{9321139,
   author={Zheng, Zerong and Yu, Tao and Liu, Yebin and Dai, Qionghai},
   journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
-  title={PaMIR: Parametric Model-Conditioned Implicit Representation for Image-based Human Reconstruction}, 
-  year={2021},
-  volume={},
-  number={},
-  pages={1-1},
+  title={PaMIR: Parametric Model-Conditioned Implicit Representation for Image-Based Human Reconstruction}, 
+  year={2022},
+  volume={44},
+  number={6},
+  pages={3170-3184},
+  keywords={Image reconstruction;Three-dimensional displays;Surface reconstruction;Solid modeling;Estimation;Training;Shape;Body pose;human reconstruction;surface representation;parametric body model;implicit surface function},
   doi={10.1109/TPAMI.2021.3050505}}
 
 
-@inproceedings{SMPL-X:2019,
-  title = {Expressive Body Capture: 3D Hands, Face, and Body from a Single Image},
-  author = {Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. A. and Tzionas, Dimitrios and Black, Michael J.},
-  booktitle = {Proceedings IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)},
-  year = {2019}
-}
+@INPROCEEDINGS{8953319,
+  author={Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. and Tzionas, Dimitrios and Black, Michael J.},
+  booktitle={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={Expressive Body Capture: 3D Hands, Face, and Body From a Single Image}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={10967-10977},
+  keywords={Face;Gesture;and Body Pose;3D from Single Image},
+  doi={10.1109/CVPR.2019.01123}}
 ```
 
 ## Installation and Usage
