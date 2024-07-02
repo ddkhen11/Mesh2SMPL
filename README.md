@@ -71,4 +71,5 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
     ```
 
 8. **Acess your results**
-    After running the script, your results will be located in the `dataset_example/image_data directory`.
+
+   After running the script, your results will be located in the `dataset_example/image_data directory`.
