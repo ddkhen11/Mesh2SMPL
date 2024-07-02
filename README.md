@@ -22,25 +22,25 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
 1. Create and activate a conda environment for Python 3.9
 
     First, create a new conda environment named myenv with Python 3.9 and activate it:
-```cmd
-conda create --name myenv python=3.9
-conda activate myenv
-```
+    ```cmd
+    conda create --name myenv python=3.9
+    conda activate myenv
+    ```
 
 2. Clone the repository and navigate into it
     Clone the Mesh2SMPL repository and navigate into the directory:
-```cmd
-git clone --recurse-submodules https://github.com/ddkhen11/Mesh2SMPL
-cd Mesh2SMPL
-```
+    ```cmd
+    git clone --recurse-submodules https://github.com/ddkhen11/Mesh2SMPL
+    cd Mesh2SMPL
+    ```
 
 3. Install dependencies using pip
     Install the necessary dependencies using pip:
-```cmd
-pip install --upgrade setuptools wheel build
-pip install pyembree
-pip install -r requirements.txt
-```
+    ```cmd
+    pip install --upgrade setuptools wheel build
+    pip install pyembree
+    pip install -r requirements.txt
+    ```
 
 4. Download the PyOpenGL wheel specific to Python 3.9
     Download the PyOpenGL wheel specific to Python 3.9 from [Google Drive](https://drive.google.com/drive/folders/1mz7faVsrp0e6IKCQh8MyZh-BcCqEGPwx). The required file is named `PyOpenGL-3.1.7-cp39-cp39-win_amd64.whl`. Save this file to a known location on your computer.
