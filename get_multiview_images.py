@@ -29,32 +29,5 @@ def get_multiview_images():
     print("Sampling occupancy.")
     main_sample_occ()
 
-def fit_openpose():
-    """
-    TODO: Implement OpenPose fitting on multiview images
-    """
-    # Placeholder for OpenPose fitting implementation
-    print("Running OpenPose fitting.")
-    # Implementation to be added
-
-def render_smpl():
-    """
-    TODO: Implement MultiviewSMPLifyX rendering
-    """
-    # Placeholder for MultiviewSMPLifyX rendering implementation
-    print("Rendering SMPL models.")
-    # Implementation to be added
-
-def main():
-    """
-    Main function orchestrating the workflow:
-    1. Generates multiview images
-    2. Fits OpenPose
-    3. Renders SMPL models
-    """
-    get_multiview_images()
-    fit_openpose()
-    render_smpl()
-
 if __name__ == "__main__":
-    main()
+    get_multiview_images()
