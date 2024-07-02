@@ -28,39 +28,53 @@ If you use this code, please cite the following papers:
 
 ## Instructions to Run the Program
 
-### 1. Get Multiview Images
+    First, create a new conda environment named myenv with Python 3.9 and activate it:
+    ```cmd
+    conda create --name myenv python=3.9
+    conda activate myenv
+    ```
 
-1. Create a conda environment for Python 3.9:
+2. **Clone the repository and navigate into it**
+
+    Clone the Mesh2SMPL repository and navigate into the directory:
+    ```cmd
+    git clone --recurse-submodules https://github.com/ddkhen11/Mesh2SMPL
+    cd Mesh2SMPL
+    ```
+
+3. **Install dependencies using pip**
+
+    Install the necessary dependencies using pip:
+    ```cmd
+    pip install --upgrade setuptools wheel build
+    pip install pyembree
+    pip install -r requirements.txt
+    ```
+
+4. **Download the PyOpenGL wheel specific to Python 3.9**
+
+    Download the PyOpenGL wheel specific to Python 3.9 from [Google Drive](https://drive.google.com/drive/folders/1mz7faVsrp0e6IKCQh8MyZh-BcCqEGPwx). The required file is named `PyOpenGL-3.1.7-cp39-cp39-win_amd64.whl`. Save this file to a known location on your computer.
+
+5. **Install PyOpenGL from the downloaded wheel**
+
+    Navigate to the directory where you downloaded the wheel file:
+    ```cmd
+    cd path\to\downloaded\wheel
+    ```
+    Install the PyOpenGL package from the downloaded wheel file:
+    ```cmd
+    pip install PyOpenGL-3.1.7-cp39-cp39-win_amd64
+    ```
+
+6. **Prepare your 3D mesh data**
+
+    Place a folder containing your `.obj` mesh file, `.mtl` file, and `.jpg` texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
+
+7. Run the main.py script:
 ```cmd
-conda create --name myenv python=3.9
-conda activate myenv
+python main.py
 ```
 
-2. Clone the repository and navigate into it:
-```cmd
-git clone --recurse-submodules https://github.com/ddkhen11/Mesh2SMPL
-cd Mesh2SMPL
-```
+8. **Acess your results**
 
-3. Install dependencies using pip:
-```cmd
-pip install --upgrade setuptools wheel build
-pip install pyembree
-pip install -r requirements.txt
-```
-
-4. Download the PyOpenGL wheel specific to Python 3.9 from [Google Drive](https://drive.google.com/drive/folders/1mz7faVsrp0e6IKCQh8MyZh-BcCqEGPwx) (filename: PyOpenGL-3.1.7-cp39-cp39-win_amd64.whl).
-
-5. Install PyOpenGL from the downloaded wheel:
-```cmd
-pip install PyOpenGL-3.1.7-cp39-cp39-win_amd64
-```
-
-6. Place a folder containing your .obj mesh file, .mtl file, and .jpg texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
-
-7. Run the get_multiview_images.py script:
-```cmd
-python get_multiview_images.py
-```
-
-8. Your results will be in `dataset_example/image_data`.
+   After running the script, your results will be located in the `dataset_example/image_data directory`.
