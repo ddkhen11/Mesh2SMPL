@@ -162,7 +162,8 @@ cython_debug/
 #.idea/
 
 .vscode
-dataset_example/mesh_data/dataset
+dataset_example/mesh_data/*
+!dataset_example/mesh_data/instructions.txt
 dataset_example/image_data
 tools/smpl_models/*
 !tools/smpl_models/instructions.txt
