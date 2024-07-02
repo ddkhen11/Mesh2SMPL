@@ -26,9 +26,14 @@ If you use this code, please cite the following papers:
 }
 ```
 
-## Instructions to Run the Program
+## Installation and Usage
+To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed step-by-step instructions below. You can use either PowerShell or the Anaconda Command Prompt to execute these instructions.
 
-    First, create a new conda environment named myenv with Python 3.9 and activate it:
+### 1. Get Multiview Images
+
+1. **Create and activate a conda environment for Python 3.9**
+
+    First, create a new conda environment for Python 3.9 and activate it:
     ```cmd
     conda create --name myenv python=3.9
     conda activate myenv
@@ -70,11 +75,21 @@ If you use this code, please cite the following papers:
 
     Place a folder containing your `.obj` mesh file, `.mtl` file, and `.jpg` texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
 
-7. Run the main.py script:
-```cmd
-python main.py
-```
+7. **Run the `get_multiview_images.py` script**
 
-8. **Acess your results**
+    Navigate back to the Mesh2SMPL directory and execute the `get_multiview_images.py` script to process your mesh data:
+    ```cmd
+    python get_multiview_images.py
+    ```
+
+8. **Access your results**
 
    After running the script, your results will be located in the `dataset_example/image_data directory`.
+
+### 2. Fit OpenPose to the Multiview Images
+
+TBD
+
+### 3. Render the SMPL Model
+
+TBD
