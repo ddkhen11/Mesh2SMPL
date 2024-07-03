@@ -168,3 +168,5 @@ dataset_example/image_data
 tools/smpl_models/*
 !tools/smpl_models/instructions.txt
 tools/output_folder
+tools/openpose_keypoints
+tools/*.json
