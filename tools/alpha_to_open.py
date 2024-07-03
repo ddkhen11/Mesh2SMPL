@@ -25,10 +25,10 @@ openpose_to_alpha_mapping = {
     17: 4,   # REar
     18: 3,   # LEar
     19: 20,  # LBigToe
-    20: 22,  # RBigToe
-    21: 21,  # LSmallToe
-    22: 23,  # RSmallToe
-    23: 24,  # LHeel
+    20: 22,  # LSmallToe
+    21: 24,  # LHeel
+    22: 21,  # RBigToe
+    23: 23,  # RSmallToe
     24: 25   # RHeel
 }
 
@@ -134,7 +134,8 @@ def main():
     # Process each person's AlphaPose entry and save as OpenPose JSON
     for idx, person_entry in enumerate(alpha_data):
         openpose_data = convert_alpha_to_openpose(person_entry)
-        output_filename = os.path.join(output_dir, f'person_{idx + 1}.json')
+        idx = person_entry["image_id"].rstrip(".jpg")
+        output_filename = os.path.join(output_dir, f'{idx}_keypoints.json')
         with open(output_filename, 'w') as outfile:
             json.dump(openpose_data, outfile, indent=4)
 
