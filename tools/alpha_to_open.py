@@ -128,7 +128,7 @@ def main():
         alpha_data = json.load(f)
 
     # Create a directory for OpenPose JSONs if it doesn't exist
-    output_dir = os.path.join(os.path.dirname(alphapose_json_path), 'openpose_keypoints')
+    output_dir = os.path.join(os.path.dirname(alphapose_json_path), 'keypoints')
     os.makedirs(output_dir, exist_ok=True)
 
     # Process each person's AlphaPose entry and save as OpenPose JSON
