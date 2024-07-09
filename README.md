@@ -2,35 +2,6 @@
 
 Mesh2SMPL is a project that utilizes the [MultiviewSMPLifyX](https://github.com/ZhengZerong/MultiviewSMPLifyX) and [PaMIR](https://github.com/ZhengZerong/PaMIR) projects to convert a textured mesh scan of a human into a SMPL model.
 
-## Citation
-
-If you use this code, please cite the following papers:
-
-```bibtex
-@ARTICLE{9321139,
-  author={Zheng, Zerong and Yu, Tao and Liu, Yebin and Dai, Qionghai},
-  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
-  title={PaMIR: Parametric Model-Conditioned Implicit Representation for Image-Based Human Reconstruction}, 
-  year={2022},
-  volume={44},
-  number={6},
-  pages={3170-3184},
-  keywords={Image reconstruction;Three-dimensional displays;Surface reconstruction;Solid modeling;Estimation;Training;Shape;Body pose;human reconstruction;surface representation;parametric body model;implicit surface function},
-  doi={10.1109/TPAMI.2021.3050505}}
-
-
-@INPROCEEDINGS{8953319,
-  author={Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. and Tzionas, Dimitrios and Black, Michael J.},
-  booktitle={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
-  title={Expressive Body Capture: 3D Hands, Face, and Body From a Single Image}, 
-  year={2019},
-  volume={},
-  number={},
-  pages={10967-10977},
-  keywords={Face;Gesture;and Body Pose;3D from Single Image},
-  doi={10.1109/CVPR.2019.01123}}
-```
-
 ## Installation and Usage
 To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed step-by-step instructions below. You can use either PowerShell or the Anaconda Command Prompt to execute these instructions.
 
@@ -40,8 +11,8 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
 
     First, create a new conda environment for Python 3.9 and activate it:
     ```cmd
-    conda create --name myenv python=3.9
-    conda activate myenv
+    conda create --name multiview python=3.9
+    conda activate multiview
     ```
 
 2. **Clone the repository and navigate into it**
@@ -89,12 +60,156 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
 
 8. **Access your results**
 
-   After running the script, your results will be located in the `dataset_example/image_data directory`.
+   After running the script, your results will be located in the `dataset_example/image_data` directory.
 
 ### 2. Fit OpenPose to the Multiview Images
 
-TBD
+Due to the complexities of installing and running OpenPose, we will instead use [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose) on our multiview images and then convert the AlphaPose keypoints to OpenPose keypoints. The following set of instructions is a detailed guide to installing and running AlphaPose, so please refer to AlphaPose's GitHub repository if you need to troubleshoot anything.
+
+1. **Create and activate a conda environment for Python 3.7**
+
+    If your previous conda environment is still active, make sure you deactivate it first:
+    ```cmd
+    conda deactivate
+    ```
+    Then create a new conda environment for Python 3.7 and activate it:
+    ```cmd
+    conda create --name alphapose python=3.7
+    conda activate alphapose
+    ```
+
+2. **Clone the repository and navigate into it**
+
+    Check if your current directory is still `Mesh2SMPL`:
+    ```cmd
+    ls
+    ```
+    If it is, make sure you navigate out of it:
+    ```cmd
+    cd ..
+    ```
+    Then, clone the AlphaPose repository and navigate into the directory:
+    ```cmd
+    git clone https://github.com/MVIG-SJTU/AlphaPose.git
+    cd AlphaPose
+    ```
+    Here's how your folder structure should look right now:
+    ```
+    ├── AlphaPose  # current directory
+    └── Mesh2SMPL
+    ```
+
+3. **Install dependencies using pip**
+
+    Install the necessary dependencies using pip:
+    ```cmd
+    pip install Cython easydict matplotlib numpy natsort opencv-python PyYAML scipy setuptools torch torchvision tqdm
+    ```
+
+4. **Delete necessary lines and files from AlphaPose directory**
+
+    In the AlphaPose directory (which should be your current directory right now), open `setup.py` and delete [line 211](https://github.com/MVIG-SJTU/AlphaPose/blob/master/setup.py#L211). Don't forget to save the file before exiting.
+
+    In the same directory, delete the `setup.cfg` file.
+
+5. **Build and install AlphaPose**
+
+    Build and install AlphaPose:
+    ```cmd
+    python setup.py build develop
+    ```
+
+6. **Download pretrained models**
+
+    First, download the YOLO object detection model from this [link](https://drive.google.com/file/d/1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC/view) and place the file in `detector/yolo/data`.
+
+    Then, download the pretrained Fast Pose pose estimation model from this [link](https://drive.google.com/file/d/1Bb3kPoFFt-M0Y3ceqNO8DTXi1iNDd4gI/view) and place the file in the `pretrained_models` directory.
+
+7. **Run AlphaPose on the multiview images**
+
+    Run AlphaPose on the multiview images to extract the 2D pose keypoints from each image:
+    ```cmd
+    python scripts/demo_inference.py --cfg configs/halpe_coco_wholebody_136/resnet/256x192_res50_lr1e-3_2x-regression.yaml --checkpoint pretrained_models/multi_domain_fast50_regression_256x192.pth --indir ../Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>/color --outdir ../Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name> 
+    ```
+    
+    Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the previous set of instructions. 
+
+8. **Access your results**
+
+    After running AlphaPose on the multiview images, your AlphaPose keypoints will be in `alphapose-results.json` in `Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>`.
+
+9. **Convert AlphaPose keypoints to OpenPose keypoints**
+
+    First, navigate out of the AlphaPose directory and navigate back into the Mesh2SMPL directory:
+    ```cmd
+    cd ../Mesh2SMPL
+    ```
+    Then, run the script to convert the AlphaPose keypoints to OpenPose keypoints, where `<your-mesh-folder-name>` is what you named the folder containing your mesh file in step 6 of the previous set of instructions:
+    ```cmd
+    python tools/alpha_to_open.py --alphapose-json dataset_example/image_data/<your-mesh-folder-name>/alphapose-results.json
+    ```
+    Your OpenPose keypoints will be in `Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>/keypoints`.
 
 ### 3. Render the SMPL Model
 
 TBD
+
+## Citation
+
+If you use this code, please cite the following papers:
+
+```bibtex
+@ARTICLE{9321139,
+  author={Zheng, Zerong and Yu, Tao and Liu, Yebin and Dai, Qionghai},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={PaMIR: Parametric Model-Conditioned Implicit Representation for Image-Based Human Reconstruction}, 
+  year={2022},
+  volume={44},
+  number={6},
+  pages={3170-3184},
+  doi={10.1109/TPAMI.2021.3050505}}
+
+
+@INPROCEEDINGS{8953319,
+  author={Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. and Tzionas, Dimitrios and Black, Michael J.},
+  booktitle={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={Expressive Body Capture: 3D Hands, Face, and Body From a Single Image}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={10967-10977},
+  doi={10.1109/CVPR.2019.01123}}
+
+
+@ARTICLE{9954214,
+  author={Fang, Hao-Shu and Li, Jiefeng and Tang, Hongyang and Xu, Chao and Zhu, Haoyi and Xiu, Yuliang and Li, Yong-Lu and Lu, Cewu},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={AlphaPose: Whole-Body Regional Multi-Person Pose Estimation and Tracking in Real-Time}, 
+  year={2023},
+  volume={45},
+  number={6},
+  pages={7157-7173},
+  doi={10.1109/TPAMI.2022.3222784}}
+
+
+@INPROCEEDINGS{8237518,
+  author={Fang, Hao-Shu and Xie, Shuqin and Tai, Yu-Wing and Lu, Cewu},
+  booktitle={2017 IEEE International Conference on Computer Vision (ICCV)}, 
+  title={RMPE: Regional Multi-person Pose Estimation}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={2353-2362},
+  doi={10.1109/ICCV.2017.256}}
+
+
+@INPROCEEDINGS{8954341,
+  author={Li, Jiefeng and Wang, Can and Zhu, Hao and Mao, Yihuan and Fang, Hao-Shu and Lu, Cewu},
+  booktitle={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+  title={CrowdPose: Efficient Crowded Scenes Pose Estimation and a New Benchmark}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={10855-10864},
+  doi={10.1109/CVPR.2019.01112}}
+```
