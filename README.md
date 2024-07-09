@@ -29,7 +29,7 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
     ```cmd
     pip install --upgrade setuptools wheel build
     pip install pyembree
-    pip install -r requirements.txt
+    pip install -r requirements-multiview.txt
     ```
 
 4. **Download the PyOpenGL wheel specific to Python 3.9**
@@ -152,7 +152,36 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
 ### 3. Render the SMPL Model
 
-TBD
+1. **Create and activate a conda environment for Python 3.6**
+
+    If your previous conda environment is still active, make sure you deactivate it first:
+    ```cmd
+    conda deactivate
+    ```
+    Then create a new conda environment for Python 3.6 and activate it:
+    ```cmd
+    conda create --name fit-smpl python=3.6
+    conda activate fit-smpl
+    ```
+
+2. **Install dependencies using pip**
+
+    Install the necessary dependencies using pip:
+    ```cmd
+    pip install -r requirements-smpl.txt
+    ```
+
+3. **Render the SMPL model from the multiview images and fitted 2D poses**
+
+    Run the following command to render the SMPL model:
+    ```cmd 
+    python third_party\MultiviewSMPLifyX\main.py --config third_party\MultiviewSMPLifyX\cfg_files\fit_smpl.yaml --data_folder dataset_example/image_data/<your-mesh-folder-name> --output_folder dataset_example/mesh_data/<your-mesh-folder-name>/smpl --use_cuda False --gender <your-gender>
+    ```
+    Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the first set of instructions. Replace `<your-gender>` with the gender of the subject of your mesh scan (male, female, neutral).
+
+4. **Access your results**
+
+   After running the command, your results will be located in the `dataset_example/mesh_data/<your-mesh-folder-name>/smpl` directory.
 
 ## Citation
 
