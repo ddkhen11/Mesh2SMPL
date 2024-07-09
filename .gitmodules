@@ -1,3 +1,6 @@
 [submodule "third_party/PaMIR"]
 	path = third_party/PaMIR
 	url = https://github.com/ddkhen11/PaMIR.git
+[submodule "third_party/MultiviewSMPLifyX"]
+	path = third_party/MultiviewSMPLifyX
+	url = https://github.com/ddkhen11/MultiviewSMPLifyX.git
