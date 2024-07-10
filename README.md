@@ -44,7 +44,11 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
     ```
     Install the PyOpenGL package from the downloaded wheel file:
     ```cmd
-    pip install PyOpenGL-3.1.7-cp39-cp39-win_amd64
+    pip install PyOpenGL-3.1.7-cp39-cp39-win_amd64.whl
+    ```
+    After that is done, navigate back to the Mesh2SMPL directory:
+    ```cmd
+    cd path\to\Mesh2SMPL
     ```
 
 6. **Prepare your 3D mesh data**
@@ -164,22 +168,38 @@ Due to the complexities of installing and running OpenPose, we will instead use 
     conda activate fit-smpl
     ```
 
-2. **Install dependencies using pip**
+2. **Install dependencies**
 
-    Install the necessary dependencies using pip:
+    Install the necessary dependencies:
     ```cmd
     pip install -r requirements-smpl.txt
+    conda install pytorch-cpu==1.0.0 torchvision-cpu==0.2.1 cpuonly -c pytorch
     ```
 
-3. **Render the SMPL model from the multiview images and fitted 2D poses**
+3. **Download and clean the SMPL model files**
+
+    Go to https://smpl.is.tue.mpg.de/, make an account, and download version 1.0.0 of SMPL for Python Users from the downloads page. Extract this zip file. In the extracted folder, go to `SMPL_python_v.1.0.0/smpl/models`. Copy and paste the files in this folder to `tools/smpl_models` in your Mesh2SMPL directory.
+
+    Then, go to https://smplify.is.tue.mpg.de/, make an account, and download `SMPLIFY_CODE_V2.ZIP` from the downloads page. Extract this zip file. In the extracted folder, go to `smplify_public/code/models`. Copy and paste `basicModel_neutral_lbs_10_207_0_v1.0.0.pkl` to `tools/smpl_models` in your Mesh2SMPL directory.
+
+    Finally, run the following command (make sure your current directory is still Mesh2SMPL):
+    ```cmd
+    python tools/clean_models.py --input-models tools/smpl_models/*.pkl --output-folder third_party/MultiviewSMPLifyX/smplx/models/smpl
+    ```
+
+4. **Download pretrained VPoser models**
+
+    Go to https://smpl-x.is.tue.mpg.de/, make an account, and download `VPoser v1.0 - CVPR'19 (2.5 MB)` from the downloads page. Extract this zip file. In the extracted folder, go to `vposer_v1_0/snapshots`. Copy and paste the `*.pt` files to `third_party/MultiviewSMPLifyX/vposer/models/snapshots` in your Mesh2SMPL directory.
+
+5. **Render the SMPL model from the multiview images and fitted 2D poses**
 
     Run the following command to render the SMPL model:
     ```cmd 
-    python third_party\MultiviewSMPLifyX\main.py --config third_party\MultiviewSMPLifyX\cfg_files\fit_smpl.yaml --data_folder dataset_example/image_data/<your-mesh-folder-name> --output_folder dataset_example/mesh_data/<your-mesh-folder-name>/smpl --use_cuda False --gender <your-gender>
+    python third_party/MultiviewSMPLifyX/main.py --config third_party/MultiviewSMPLifyX/cfg_files/fit_smpl.yaml --data_folder ./dataset_example/image_data//<your-mesh-folder-name> --output_folder ./dataset_example/mesh_data//<your-mesh-folder-name>/smpl --model_folder third_party/MultiviewSMPLifyX/smplx/models --vposer_ckpt third_party/MultiviewSMPLifyX/vposer/models --use_cuda False --gender <your-gender>
     ```
     Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the first set of instructions. Replace `<your-gender>` with the gender of the subject of your mesh scan (male, female, neutral).
 
-4. **Access your results**
+6. **Access your results**
 
    After running the command, your results will be located in the `dataset_example/mesh_data/<your-mesh-folder-name>/smpl` directory.
 
