@@ -195,7 +195,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
     Run the following command to render the SMPL model:
     ```cmd 
-    python render_smpl.py <your-mesh-folder-name> dataset --gender <your-gender>
+    python render_smpl.py --mesh-folder-name <your-mesh-folder-name> --gender <your-gender>
     ```
     Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the first set of instructions. Replace `<your-gender>` with the gender of the subject of your mesh scan (male, female, neutral).
 
