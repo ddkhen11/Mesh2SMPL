@@ -21,7 +21,7 @@ def clean_fn(fn, output_folder='output'):
 
     if osp.split(fn)[1] == "basicModel_neutral_lbs_10_207_0_v1.0.0.pkl":
         out_fn = "SMPL_NEUTRAL.pkl"
-    elif osp.split(fn)[1] == "basicModel_m_lbs_10_207_0_v1.0.0.pkl":
+    elif osp.split(fn)[1] == "basicmodel_m_lbs_10_207_0_v1.0.0.pkl":
         out_fn = "SMPL_MALE.pkl"
     elif osp.split(fn)[1] == "basicModel_f_lbs_10_207_0_v1.0.0.pkl":
         out_fn = "SMPL_FEMALE.pkl"
