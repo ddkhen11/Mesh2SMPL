@@ -195,7 +195,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
     Run the following command to render the SMPL model:
     ```cmd 
-    python third_party/MultiviewSMPLifyX/main.py --config third_party/MultiviewSMPLifyX/cfg_files/fit_smpl.yaml --data_folder ./dataset_example/image_data//<your-mesh-folder-name> --output_folder ./dataset_example/mesh_data//<your-mesh-folder-name>/smpl --model_folder third_party/MultiviewSMPLifyX/smplx/models --vposer_ckpt third_party/MultiviewSMPLifyX/vposer/models --use_cuda False --gender <your-gender>
+    python render_smpl.py <your-mesh-folder-name> dataset --gender <your-gender>
     ```
     Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the first set of instructions. Replace `<your-gender>` with the gender of the subject of your mesh scan (male, female, neutral).
 
