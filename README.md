@@ -201,7 +201,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
 6. **Access your results**
 
-   After running the command, your results will be located in the `dataset_example/mesh_data/<your-mesh-folder-name>/smpl` directory.
+   After running the command, your results will be located in the `dataset_example/mesh_data/<your-mesh-folder-name>/smpl` directory. `smpl_mesh.obj` will contain your fitted SMPL model scaled back to the original size of your inputted mesh file. `smpl_param.pkl` will contains the parameters for your fitted SMPL model (not adjusted for scale).
 
 ## Citation
 
