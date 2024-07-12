@@ -1,0 +1,12 @@
+Cython 
+easydict 
+matplotlib 
+numpy 
+natsort 
+opencv-python 
+PyYAML 
+scipy 
+setuptools 
+torch 
+torchvision 
+tqdm

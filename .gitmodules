@@ -4,3 +4,6 @@
 [submodule "third_party/MultiviewSMPLifyX"]
 	path = third_party/MultiviewSMPLifyX
 	url = https://github.com/ddkhen11/MultiviewSMPLifyX.git
+[submodule "third_party/AlphaPose"]
+	path = third_party/AlphaPose
+	url = https://github.com/MVIG-SJTU/AlphaPose.git
