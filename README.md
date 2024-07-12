@@ -82,77 +82,45 @@ Due to the complexities of installing and running OpenPose, we will instead use 
     conda activate alphapose
     ```
 
-2. **Clone the repository and navigate into it**
-
-    Check if your current directory is still `Mesh2SMPL`:
-    ```cmd
-    ls
-    ```
-    If it is, make sure you navigate out of it:
-    ```cmd
-    cd ..
-    ```
-    Then, clone the AlphaPose repository and navigate into the directory:
-    ```cmd
-    git clone https://github.com/MVIG-SJTU/AlphaPose.git
-    cd AlphaPose
-    ```
-    Here's how your folder structure should look right now:
-    ```
-    ├── AlphaPose  # current directory
-    └── Mesh2SMPL
-    ```
-
-3. **Install dependencies using pip**
+2. **Install dependencies using pip**
 
     Install the necessary dependencies using pip:
     ```cmd
-    pip install Cython easydict matplotlib numpy natsort opencv-python PyYAML scipy setuptools torch torchvision tqdm
+    pip install -r requirements-pose.txt
     ```
 
 4. **Delete necessary lines and files from AlphaPose directory**
 
-    In the AlphaPose directory (which should be your current directory right now), open `setup.py` and delete [line 211](https://github.com/MVIG-SJTU/AlphaPose/blob/master/setup.py#L211). Don't forget to save the file before exiting.
+    In `third_party/AlphaPose` open `setup.py` and delete [line 211](https://github.com/MVIG-SJTU/AlphaPose/blob/master/setup.py#L211). Don't forget to save the file before exiting.
 
-    In the same directory, delete the `setup.cfg` file.
+    In the same folder, delete the `setup.cfg` file.
 
 5. **Build and install AlphaPose**
 
-    Build and install AlphaPose:
+    Navigate to the AlphaPose directory, build and install AlphaPose, and navigate back to the Mesh2SMPL directory:
     ```cmd
+    cd third_party/AlphaPose
     python setup.py build develop
+    cd ../..
     ```
 
 6. **Download pretrained models**
 
-    First, download the YOLO object detection model from this [link](https://drive.google.com/file/d/1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC/view) and place the file in `detector/yolo/data`.
+    First, download the YOLO object detection model from this [link](https://drive.google.com/file/d/1D47msNOOiJKvPOXlnpyzdKA3k6E97NTC/view) and place the file in `third_party/AlphaPose/detector/yolo/data`.
 
-    Then, download the pretrained Fast Pose pose estimation model from this [link](https://drive.google.com/file/d/1Bb3kPoFFt-M0Y3ceqNO8DTXi1iNDd4gI/view) and place the file in the `pretrained_models` directory.
+    Then, download the pretrained Fast Pose pose estimation model from this [link](https://drive.google.com/file/d/1Bb3kPoFFt-M0Y3ceqNO8DTXi1iNDd4gI/view) and place the file in the `third_party/AlphaPose/pretrained_models` directory.
 
-7. **Run AlphaPose on the multiview images**
+7. **Run AlphaPose on the multiview images and convert to OpenPose**
 
-    Run AlphaPose on the multiview images to extract the 2D pose keypoints from each image:
+    Run the following command to extract the AlphaPose 2D pose keypoints from each image and convert them to OpenPose keypoints:
+
     ```cmd
-    python scripts/demo_inference.py --cfg configs/halpe_coco_wholebody_136/resnet/256x192_res50_lr1e-3_2x-regression.yaml --checkpoint pretrained_models/multi_domain_fast50_regression_256x192.pth --indir ../Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>/color --outdir ../Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name> 
+    python fit_openpose.py --mesh-folder-name <your-mesh-folder-name> 
     ```
     
-    Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the previous set of instructions. 
+    Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the previous set of instructions.
 
-8. **Access your results**
-
-    After running AlphaPose on the multiview images, your AlphaPose keypoints will be in `alphapose-results.json` in `Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>`.
-
-9. **Convert AlphaPose keypoints to OpenPose keypoints**
-
-    First, navigate out of the AlphaPose directory and navigate back into the Mesh2SMPL directory:
-    ```cmd
-    cd ../Mesh2SMPL
-    ```
-    Then, run the script to convert the AlphaPose keypoints to OpenPose keypoints, where `<your-mesh-folder-name>` is what you named the folder containing your mesh file in step 6 of the previous set of instructions:
-    ```cmd
-    python tools/alpha_to_open.py --alphapose-json dataset_example/image_data/<your-mesh-folder-name>/alphapose-results.json
-    ```
-    Your OpenPose keypoints will be in `Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>/keypoints`.
+    Your OpenPose keypoints will be in `Mesh2SMPL/dataset_example/image_data/<your-mesh-folder-name>/keypoints`. 
 
 ### 3. Render the SMPL Model
 
