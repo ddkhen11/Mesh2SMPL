@@ -26,8 +26,8 @@ def get_multiview_images():
     print("Rendering images.")
     main_render_images()
 
-    print("Sampling occupancy.")
-    main_sample_occ()
+    # print("Sampling occupancy.")
+    # main_sample_occ()
 
 if __name__ == "__main__":
     get_multiview_images()
