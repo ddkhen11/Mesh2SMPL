@@ -53,7 +53,7 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
 
 6. **Prepare your 3D mesh data**
 
-    Place a folder containing your `.obj` mesh file, `.mtl` file, and `.jpg` texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
+    Place a folder containing your `.obj` mesh file and `.jpg` texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
 
 7. **Run the `get_multiview_images.py` script**
 
