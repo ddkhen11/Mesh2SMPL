@@ -1,5 +1,6 @@
 import argparse
 import glob
+import os
 import subprocess
 
 import trimesh
@@ -21,7 +22,17 @@ def render_smpl(mesh_folder_name, gender):
 
     print("Rendering SMPL models.")
 
-    subprocess.run(["python", "third_party/MultiviewSMPLifyX/main.py", "--config", config, "--data_folder", data_folder, "--output_folder", output_folder, "--model_folder", model_folder, "--vposer_ckpt", vposer_ckpt, "--use_cuda", use_cuda, "--gender", gender], check=True)
+    subprocess.run([
+        "python", "third_party/MultiviewSMPLifyX/main.py", 
+        "--config", config, 
+        "--data_folder", data_folder, 
+        "--output_folder", output_folder, 
+        "--model_folder", model_folder, 
+        "--vposer_ckpt", vposer_ckpt, 
+        "--use_cuda", use_cuda, 
+        "--gender", gender
+        ], 
+        check=True)
 
 def rescale_smpl(mesh_folder_name):
     """
@@ -53,20 +64,29 @@ def align_smpl(mesh_folder_name):
     # Define file paths for the SMPL model and original mesh
     smpl_model_path = f"./dataset_example/mesh_data/{mesh_folder_name}/smpl/smpl_mesh.obj"
     norm_og_scan_path = glob.glob(f"./dataset_example/mesh_data/{mesh_folder_name}/original/*.obj")[0]
-    
-    # Load meshes with Open3D
+
+    # Get point cloud of original mesh
     og_mesh = o3d.io.read_triangle_mesh(norm_og_scan_path)
+    if og_mesh.has_traingles():
+        cloud_og = og_mesh.sample_points_uniformly(number_of_points=10000)
+    else:
+        temp_path = f"./dataset_example/mesh_data/{mesh_folder_name}/original/temp.ply"
+        og_mesh_obj = trimesh.load_mesh(norm_og_scan_path)
+        og_mesh_obj.export(temp_path)
+        cloud_og = o3d.io.read_point_cloud(temp_path)
+        os.remove(temp_path)
+    
+    # Load SMPL model mesh
     smpl_mesh = o3d.io.read_triangle_mesh(smpl_model_path)
 
-    # Convert to point clouds
-    cloud_og = og_mesh.sample_points_uniformly(number_of_points=10000)
+    # Convert SMPL model mesh to point cloud
     cloud_smpl = smpl_mesh.sample_points_uniformly(number_of_points=10000)
     
     # Compute normals for the point clouds (for more robust ICP)
     cloud_og.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
     cloud_smpl.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
     
-    # Perform ICP
+    # Perform point-to-point ICP
     reg_icp = o3d.pipelines.registration.registration_icp(
         cloud_smpl, cloud_og, max_correspondence_distance=50, 
         estimation_method=o3d.pipelines.registration.TransformationEstimationPointToPoint()
@@ -101,6 +121,6 @@ if __name__ == "__main__":
     mesh_folder_name = args.mesh_folder_name
     gender = args.gender
 
-    render_smpl(mesh_folder_name, gender)
-    rescale_smpl(mesh_folder_name)
+    # render_smpl(mesh_folder_name, gender)
+    # rescale_smpl(mesh_folder_name)
     align_smpl(mesh_folder_name)
