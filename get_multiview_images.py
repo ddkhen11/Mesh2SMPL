@@ -22,10 +22,10 @@ def get_multiview_images(mesh_folder_name):
     main_normalize_mesh(mesh_folder_name)
 
     print("Calculating PRT.")
-    main_calc_prt()
+    main_calc_prt(mesh_folder_name)
 
     print("Rendering images.")
-    main_render_images()
+    main_render_images(mesh_folder_name)
 
     # print("Sampling occupancy.")
     # main_sample_occ()
