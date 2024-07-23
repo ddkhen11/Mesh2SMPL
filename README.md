@@ -27,6 +27,18 @@ If you use this code, please cite the following papers:
   doi={10.1109/TPAMI.2021.3050505}}
 
 
+@ARTICLE{SMPL:2015,
+    author = {Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.},
+    journal = {ACM Transactions on Graphics, (Proc. SIGGRAPH Asia)},
+    title = {{SMPL}: A Skinned Multi-Person Linear Model}, 
+    year = {2015},
+    month = oct,
+    volume = {34},
+    number = {6},
+    pages = {248:1--248:16},
+    publisher = {ACM}}
+
+
 @INPROCEEDINGS{8953319,
   author={Pavlakos, Georgios and Choutas, Vasileios and Ghorbani, Nima and Bolkart, Timo and Osman, Ahmed A. and Tzionas, Dimitrios and Black, Michael J.},
   booktitle={2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
