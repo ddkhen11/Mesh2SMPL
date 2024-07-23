@@ -121,6 +121,6 @@ if __name__ == "__main__":
     mesh_folder_name = args.mesh_folder_name
     gender = args.gender
 
-    # render_smpl(mesh_folder_name, gender)
-    # rescale_smpl(mesh_folder_name)
+    render_smpl(mesh_folder_name, gender)
+    rescale_smpl(mesh_folder_name)
     align_smpl(mesh_folder_name)
