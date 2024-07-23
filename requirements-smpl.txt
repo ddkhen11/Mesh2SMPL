@@ -11,3 +11,4 @@ torchgeometry
 PyYAML
 tqdm
 pillow
+open3d
