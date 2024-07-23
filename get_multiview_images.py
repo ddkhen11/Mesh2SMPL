@@ -28,7 +28,7 @@ def get_multiview_images(mesh_folder_name):
     main_render_images(mesh_folder_name)
 
     # print("Sampling occupancy.")
-    # main_sample_occ()
+    # main_sample_occ(mesh_folder_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
