@@ -109,10 +109,10 @@ def align_smpl(mesh_folder_name):
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mesh-folder-name', dest='mesh_folder_name', 
+    parser.add_argument('-n', '--mesh-folder-name', dest='mesh_folder_name', 
                         required=True, type=str,
                         help='The name of the folder containing your mesh data')
-    parser.add_argument('--gender', dest='gender',
+    parser.add_argument('-g', '--gender', dest='gender',
                         required=True, type=str,
                         help='The gender of the subject of your mesh scan', 
                         choices=["male", "female", "neutral"])

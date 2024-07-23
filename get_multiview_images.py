@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 
@@ -9,7 +10,7 @@ from third_party.PaMIR.data.main_calc_prt import main as main_calc_prt
 from third_party.PaMIR.data.main_render_images import main as main_render_images
 from third_party.PaMIR.data.main_sample_occ import main as main_sample_occ
 
-def get_multiview_images():
+def get_multiview_images(mesh_folder_name):
     """
     Performs sequential tasks to generate multiview images:
     1. Normalizes mesh data
@@ -18,16 +19,21 @@ def get_multiview_images():
     4. Samples occupancy
     """
     print("Normalizing mesh.")
-    main_normalize_mesh()
+    main_normalize_mesh(mesh_folder_name)
 
     print("Calculating PRT.")
-    main_calc_prt()
+    main_calc_prt(mesh_folder_name)
 
     print("Rendering images.")
-    main_render_images()
+    main_render_images(mesh_folder_name)
 
     # print("Sampling occupancy.")
-    # main_sample_occ()
+    # main_sample_occ(mesh_folder_name)
 
 if __name__ == "__main__":
-    get_multiview_images()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n', '--mesh-folder-name', dest='mesh_folder_name', 
+                        required=True, type=str,
+                        help='The name of the folder containing your mesh data')
+    args = parser.parse_args()
+    get_multiview_images(args.mesh_folder_name)
