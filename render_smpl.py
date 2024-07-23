@@ -67,7 +67,7 @@ def align_smpl(mesh_folder_name):
 
     # Get point cloud of original mesh
     og_mesh = o3d.io.read_triangle_mesh(norm_og_scan_path)
-    if og_mesh.has_traingles():
+    if len(og_mesh.triangles) > 0:
         cloud_og = og_mesh.sample_points_uniformly(number_of_points=10000)
     else:
         temp_path = f"./dataset_example/mesh_data/{mesh_folder_name}/original/temp.ply"
@@ -121,6 +121,6 @@ if __name__ == "__main__":
     mesh_folder_name = args.mesh_folder_name
     gender = args.gender
 
-    render_smpl(mesh_folder_name, gender)
-    rescale_smpl(mesh_folder_name)
+    # render_smpl(mesh_folder_name, gender)
+    # rescale_smpl(mesh_folder_name)
     align_smpl(mesh_folder_name)
