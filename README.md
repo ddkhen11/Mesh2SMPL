@@ -59,8 +59,10 @@ To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed s
 
     Navigate back to the Mesh2SMPL directory and execute the `get_multiview_images.py` script to process your mesh data:
     ```cmd
-    python get_multiview_images.py
+    python get_multiview_images.py -n <your-mesh-folder-name> 
     ```
+
+    Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in the previous step.
 
 8. **Access your results**
 
@@ -115,7 +117,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
     Run the following command to extract the AlphaPose 2D pose keypoints from each image and convert them to OpenPose keypoints:
 
     ```cmd
-    python fit_openpose.py --mesh-folder-name <your-mesh-folder-name> 
+    python fit_openpose.py -n <your-mesh-folder-name> 
     ```
     
     Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the previous set of instructions.
@@ -163,7 +165,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
     Run the following command to render the SMPL model:
     ```cmd 
-    python render_smpl.py --mesh-folder-name <your-mesh-folder-name> --gender <your-gender>
+    python render_smpl.py -n <your-mesh-folder-name> -g <your-gender>
     ```
     Replace `<your-mesh-folder-name>` with what you named the folder containing your mesh file in step 6 of the first set of instructions. Replace `<your-gender>` with the gender of the subject of your mesh scan (male, female, neutral).
 
