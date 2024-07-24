@@ -100,11 +100,18 @@ def align_smpl(mesh_folder_name):
     
     # Apply transformation
     smpl_mesh.transform(reg_icp.transformation)
+
+    # Print Chamfer distance
+    dists1 = cloud_og.compute_point_cloud_distance(cloud_smpl)
+    dists1 = np.asarray(dists1)
+    dists2 = cloud_smpl.compute_point_cloud_distance(cloud_og)
+    dists2 = np.asarray(dists2)
+    chamfer = (np.mean(dists1) + np.mean(dists2)) / 2
+    print(f"Chamfer distance between SMPL model and original scan: {chamfer}")
     
     # Save the aligned mesh
     o3d.io.write_triangle_mesh(smpl_model_path, smpl_mesh)
-    
-    print(f"Mesh B (SMPL model) aligned to Mesh A (original scan) and saved to '{smpl_model_path}'")
+    print(f"SMPL model aligned to original scan")
 
     
 if __name__ == "__main__":
