@@ -113,10 +113,25 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
     Install the necessary dependencies:
     ```cmd
-    pip install --upgrade --user pip
+    python -m pip install --upgrade pip
     pip install -r requirements-smpl.txt
     conda install pytorch-cpu==1.0.0 torchvision-cpu==0.2.1 cpuonly -c pytorch
     ```
+
+    Also, install the necessary dependencies to help align your outputted SMPL model with your input mesh:
+    ```cmd
+    cd nricp/required_libs/scikit-sparse-0.4.4
+    conda install -c conda-forge suitesparse
+
+    # Assuming your current conda environment is named 'fit-smpl'
+    $env:SUITESPARSE_INCLUDE_DIR='c:\users\<user>\.conda\envs\fit-smpl\Library\include\suitesparse'
+    $env:SUITESPARSE_LIBRARY_DIR='c:\users\<user>\.conda\envs\fit-smpl\Library\lib'
+
+    python setup.py install
+    cd ../../..
+    ```
+
+    Replace `<user>` with the name of the current user on your computer.
 
 3. **Download and clean the SMPL model files**
 

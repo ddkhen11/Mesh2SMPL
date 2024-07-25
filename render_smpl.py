@@ -4,6 +4,7 @@ import os
 import subprocess
 
 import trimesh
+from nricp.nricp import nonrigidIcp
 import numpy as np
 import open3d as o3d
 
@@ -100,6 +101,14 @@ def align_smpl(mesh_folder_name):
     
     # Apply transformation
     smpl_mesh.transform(reg_icp.transformation)
+
+    # Perform non-rigid ICP
+    smpl_mesh.compute_vertex_normals()
+    og_mesh.compute_vertex_normals() 
+    smpl_mesh = nonrigidIcp(smpl_mesh, og_mesh)
+
+    # Convert SMPL model mesh to point cloud again (for Chamfer distance)
+    cloud_smpl = smpl_mesh.sample_points_uniformly(number_of_points=10000)
 
     # Print Chamfer distance
     dists1 = cloud_og.compute_point_cloud_distance(cloud_smpl)
