@@ -113,7 +113,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
     Install the necessary dependencies:
     ```cmd
-    pip install --upgrade --user pip
+    python -m pip install --upgrade pip
     pip install -r requirements-smpl.txt
     conda install pytorch-cpu==1.0.0 torchvision-cpu==0.2.1 cpuonly -c pytorch
     ```
