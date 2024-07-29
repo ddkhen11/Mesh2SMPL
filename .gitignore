@@ -172,3 +172,4 @@ tools/smpl_models/*
 tools/output_folder
 tools/openpose_keypoints
 tools/*.json
+*.npy
