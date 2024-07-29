@@ -36,7 +36,7 @@ def render_smpl(mesh_folder_name, gender):
 
 def rescale_smpl(mesh_folder_name):
     """
-    Rescales the rendered SMPL model to the original size of the input mesh.
+    Rescales the rendered SMPL model and associated joints to the original size of the input mesh.
     """
     print("Rescaling SMPL model.")
     
@@ -56,6 +56,12 @@ def rescale_smpl(mesh_folder_name):
     
     # Export the rescaled SMPL mesh
     trimesh.base.export_mesh(smpl_mesh, smpl_model_path)
+
+    # Rescale the joints
+    joints_path = os.path.join(os.path.split(smpl_model_path)[0], "joints.npy")
+    joints = np.load(joints_path)
+    joints /= scale
+    np.save(joints_path, joints)
 
 def align_smpl(mesh_folder_name):
     """
