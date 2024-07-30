@@ -68,8 +68,9 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
 2. **Install dependencies using pip**
 
-    Install the necessary dependencies using pip:
+    Navigate back to the Mesh2SMPL directory and install the necessary dependencies using pip:
     ```cmd
+    cd path\to\Mesh2SMPL
     pip install -r requirements-pose.txt
     ```
 
