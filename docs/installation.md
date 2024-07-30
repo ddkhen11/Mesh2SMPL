@@ -82,7 +82,7 @@ Due to the complexities of installing and running OpenPose, we will instead use 
 
 4. **Build and install AlphaPose**
 
-    Navigate to the AlphaPose directory, build and install AlphaPose, and navigate back to the Mesh2SMPL directory:
+    Navigate to the AlphaPose directory, build and install AlphaPose, and navigate back to the Mesh2SMPL directory. Ensure that Microsoft Visual C++ 14.0 or greater has been installed through Microsoft C++ Build Tools https://visualstudio.microsoft.com/visual-cpp-build-tools/ prior to running this:
     ```cmd
     cd third_party/AlphaPose
     python setup.py build develop
