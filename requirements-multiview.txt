@@ -4,3 +4,4 @@ pyexr
 opencv-python
 tqdm
 scipy
+pillow
