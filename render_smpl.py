@@ -63,16 +63,20 @@ def rescale_smpl(mesh_folder_name):
     joints /= scale
     np.save(joints_path, joints)
 
-def align_smpl(mesh_folder_name):
+def align_smpl(mesh_folder_name, mcd_multiplier):
     """
-    Aligns the rescaled SMPL model to the original scan using the Iterative Closest Point (ICP) algorithm.
+    Aligns the rescaled SMPL model to the original scan using RANSAC-based global registration followed by ICP.
     """
+    print("Aligning SMPL model.")
+
     # Define file paths for the SMPL model and original mesh
     smpl_model_path = f"./dataset_example/mesh_data/{mesh_folder_name}/smpl/smpl_mesh.obj"
     norm_og_scan_path = glob.glob(f"./dataset_example/mesh_data/{mesh_folder_name}/original/*.obj")[0]
 
-    # Get point cloud of original mesh
+    # Load original mesh
     og_mesh = o3d.io.read_triangle_mesh(norm_og_scan_path)
+
+    # Get point cloud of original mesh
     if len(og_mesh.triangles) > 0:
         cloud_og = og_mesh.sample_points_uniformly(number_of_points=10000)
     else:
@@ -92,21 +96,64 @@ def align_smpl(mesh_folder_name):
     cloud_og.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
     cloud_smpl.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
     
-    # Perform point-to-point ICP
-    reg_icp = o3d.pipelines.registration.registration_icp(
-        cloud_smpl, cloud_og, max_correspondence_distance=50, 
-        estimation_method=o3d.pipelines.registration.TransformationEstimationPointToPoint()
-    )
+    # Perform global registration using RANSAC
+    def execute_global_registration(source_down, target_down, source_fpfh, target_fpfh, voxel_size):
+        distance_threshold = voxel_size * 1.5
+        result = o3d.pipelines.registration.registration_ransac_based_on_feature_matching(
+            source_down, target_down, source_fpfh, target_fpfh, True,
+            distance_threshold,
+            o3d.pipelines.registration.TransformationEstimationPointToPoint(False),
+            3, [
+                o3d.pipelines.registration.CorrespondenceCheckerBasedOnEdgeLength(
+                    0.9),
+                o3d.pipelines.registration.CorrespondenceCheckerBasedOnDistance(
+                    distance_threshold)
+            ], o3d.pipelines.registration.RANSACConvergenceCriteria(100000, 0.999))
+        return result
     
-    # Check if ICP converged
-    if reg_icp.fitness < 0.5:
-        print(f"ICP did not converge. Fitness score: {reg_icp.fitness:.2f}. Consider adjusting ICP parameters.")
-    else:
-         print(f"ICP converged. Fitness score: {reg_icp.fitness:.2f}")
+    # Prepare datasets for global registration
+    def prepare_dataset(voxel_size):
+        trans_init = np.identity(4)  # Initial transformation (identity matrix)
+        
+        # Downsample and preprocess point clouds
+        source_down, source_fpfh = preprocess_point_cloud(cloud_smpl, voxel_size)
+        target_down, target_fpfh = preprocess_point_cloud(cloud_og, voxel_size)
+        
+        return source_down, target_down, source_fpfh, target_fpfh, trans_init
     
-    # Apply transformation
-    smpl_mesh.transform(reg_icp.transformation)
-
+    # Function to preprocess point clouds
+    def preprocess_point_cloud(pcd, voxel_size):
+        pcd_down = pcd.voxel_down_sample(voxel_size)
+    
+        radius_normal = voxel_size * 2
+        pcd_down.estimate_normals(
+            o3d.geometry.KDTreeSearchParamHybrid(radius=radius_normal, max_nn=30))
+    
+        radius_feature = voxel_size * 5
+        pcd_fpfh = o3d.pipelines.registration.compute_fpfh_feature(
+            pcd_down,
+            o3d.geometry.KDTreeSearchParamHybrid(radius=radius_feature, max_nn=100))
+        return pcd_down, pcd_fpfh
+    
+    # Execute global registration
+    voxel_size = 0.05  # Voxel size for downsampling
+    source_down, target_down, source_fpfh, target_fpfh, trans_init = prepare_dataset(voxel_size)
+    result_ransac = execute_global_registration(source_down, target_down, source_fpfh, target_fpfh, voxel_size)
+    
+    # Perform ICP refinement
+    def refine_registration(source, target, transformation):
+        distance_threshold = voxel_size * 0.4
+        result = o3d.pipelines.registration.registration_icp(
+            source, target, distance_threshold, transformation,
+            o3d.pipelines.registration.TransformationEstimationPointToPlane())
+        return result
+    
+    # Refine alignment using ICP
+    result_icp = refine_registration(cloud_smpl, cloud_og, result_ransac.transformation)
+    
+    # Apply final transformation to SMPL mesh
+    smpl_mesh.transform(result_icp.transformation)
+    
     # Print Chamfer distance
     dists1 = cloud_og.compute_point_cloud_distance(cloud_smpl)
     dists1 = np.asarray(dists1)
@@ -136,4 +183,4 @@ if __name__ == "__main__":
 
     render_smpl(mesh_folder_name, gender)
     rescale_smpl(mesh_folder_name)
-    align_smpl(mesh_folder_name)
+    align_smpl(mesh_folder_name, 0.5)
