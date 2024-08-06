@@ -2,7 +2,7 @@
 
 Prerequisites: 64-bit Windows system, Python, Anaconda
 
-To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed step-by-step instructions below. You can use either PowerShell or the Anaconda Command Prompt to execute these instructions.
+To set up and run the Mesh2SMPL repository using Anaconda, follow the detailed step-by-step instructions below EXACTLY as specified. You can use either PowerShell or the Anaconda Command Prompt to execute these instructions.
 
 ### 1. Setup Multiview Images Script
 
