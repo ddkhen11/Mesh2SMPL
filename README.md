@@ -4,7 +4,7 @@ Mesh2SMPL is a project that utilizes the [MultiviewSMPLifyX](https://github.com/
 
 ## Installation
 
-If it is your first time running Mesh2SMPL, please follow the instructions in [docs/installation.md](docs/installation.md) in order to setup everything necessary to run this program.
+If it is your first time running Mesh2SMPL, please follow the instructions in [docs/installation.md](docs/installation.md) in order to setup everything necessary to run this program. [This video](https://youtu.be/elg-wVWFlO0) also provides an accompanying guide for the installation instructions.
 
 ## Usage
 
