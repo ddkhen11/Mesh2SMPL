@@ -8,8 +8,7 @@ If it is your first time running Mesh2SMPL, please follow the instructions in [d
 
 ## Usage
 
-After you have completed all the necessary setup for Mesh2SMPL, follow the instructions in [docs/run.md](docs/run.md) to run this program. 
-
+After you have completed all the necessary setup for Mesh2SMPL, follow the instructions in [docs/run.md](docs/run.md) to run this program. [This video](https://youtu.be/nS_rY6gBBZc) also provides an accompanying guide for the run instructions.
 
 ## Citation
 
