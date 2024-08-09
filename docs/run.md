@@ -22,7 +22,7 @@ Video Instructions: [https://youtu.be/nS_rY6gBBZc](https://youtu.be/nS_rY6gBBZc)
 
 3. **Prepare your 3D mesh data**
 
-    Place a folder containing your `.obj` mesh file and `.jpg` texture file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
+    Place a folder containing your `.obj` mesh file and texture image file into `dataset_example/mesh_data`. Ensure that your mesh file contains UV coordinates.
 
 4. **Run the `get_multiview_images.py` script**
 
