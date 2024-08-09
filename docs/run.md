@@ -2,6 +2,8 @@
 
 To run Mesh2SMPL, follow the detailed step-by-step instructions below. You can use either PowerShell or the Anaconda Command Prompt to execute these instructions.
 
+Video Instructions: [https://youtu.be/nS_rY6gBBZc](https://youtu.be/nS_rY6gBBZc)
+
 ### 1. Get Multiview Images
 
 1. **Navigate into Mesh2SMPL directory**
